@@ -1,7 +1,7 @@
 <?php
 require 'database.php';
 
-class dashcode{
+class dashboard{
     public $db;
 	function __construct() {
 			$this->db = new database();
@@ -12,15 +12,16 @@ class dashcode{
 			header('Content-Type: application/json');
     }
 
-    public function intern_header(){}
-    
-    public function intern_menu(){}
-    
+    public function intern_detail_display(){}
+
     public function intern_team_display(){}
-    
+
     public function intern_mentors_display(){}
-    
-    public function intern_current_stage_number(){}
+
+    public function intern_current_stage_number($id=NULL){
+      $id=$_SESSION['userId'];
+      
+    }
 
     public function intern_completed_tasks_summary(){}
 
@@ -31,6 +32,8 @@ class dashcode{
     public function intern_notifications_display(){}
 
     public function intern_progress_display(){}
+
+    public function intern_task_submit(){}
 
 }
 

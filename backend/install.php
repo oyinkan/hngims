@@ -1,5 +1,5 @@
 <?php
-$url = '';
+$url = '';//Add remote database server url
 $dbparts = parse_url($url);
 
 $hostname = $dbparts['host'];
@@ -9,12 +9,13 @@ $database = ltrim($dbparts['path'],'/'); // USING PRE-INSTALLED DATABASE ON SERV
 
 // Create connection
 $conn = new mysqli($hostname, $username, $password, $database);
+//If using local database, use the $conn line above to create your own connection script and comment out the one above.
 
 // Check connection
 if ($conn->connect_error) {
 	die("Connection failed: " . $conn->connect_error);
 }
-echo "Connection was successfully established!";
+echo "Connection was successfully established!"."<br/>";
 
 //create users table
 $sql = "CREATE TABLE users (
@@ -29,7 +30,7 @@ $sql = "CREATE TABLE users (
     )";
 if ($conn->query($sql) === true) {
     echo "Users table created successfully"."<br/>";
-  } 
+  }
   else {
     echo "Error creating Users table: " . $conn->error."<br/>";
   }
@@ -46,7 +47,7 @@ $sql = "CREATE TABLE mentors (
 )";
 if ($conn->query($sql) === true) {
     echo "Mentors table created successfully"."<br/>";
-  } 
+  }
   else {
     echo "Error creating Mentors table: " . $conn->error."<br/>";
 }
@@ -59,11 +60,30 @@ $sql = "CREATE TABLE interns (
     `totalTasks` int(11)  NOT NULL,
     `pendingTasks` int(11)  NOT NULL,
     `resolvedTasks` int(11),
+		`currentStage` int(11),
     PRIMARY KEY (id)
 )";
 if ($conn->query($sql) === true) {
-    echo "Interns table created successfully";
-  } 
+    echo "Interns table created successfully"."<br/>";
+  }
+  else {
+    echo "Error creating Interns table: " . $conn->error."<br/>";
+  }
+
+//create tasks table
+$sql = "CREATE TABLE tasks (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`userId` int(11) NOT NULL,
+	`time` varchar(128) NOT NULL,
+	`taskurl` varchar(128) NOT NULL,
+	`status` int(11) NOT NULL,
+	`gradingMentorId` int(11),
+	`notes` varchar(128),
+	PRIMARY KEY (id)
+)";
+if ($conn->query($sql) === true) {
+    echo "Interns table created successfully"."<br/>";
+  }
   else {
     echo "Error creating Interns table: " . $conn->error."<br/>";
   }
